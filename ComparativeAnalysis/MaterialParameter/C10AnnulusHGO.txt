@@ -1,0 +1,11 @@
+0.035 # O'Connel et al., 2009
+0.085 # O'Connel et al., 2012
+0.185 # Malandrino et al., 2013
+0.1667 # Ghezelbash et al., 2020
+0.348 # Rohlmann et al., 2006
+0.348 # Kiapour et al., 2006
+0.3448 # Warren et al., 2020
+0.4323 # Vinyas et al., 2023
+0.1 # Moramarco et al., 2010
+0.8627 # Rao et al., 2012 (average)
+

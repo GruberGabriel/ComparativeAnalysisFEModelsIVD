@@ -1,0 +1,10 @@
+30 # Bashkuev et al.
+30 # Warren et al.
+30 # Xie et al.
+26 # Wu et al.
+25 # Jaramillo et al.
+30 # Tang et al.
+24 # Schmidt et al.
+30 # Zhong et al.
+25.7 # Holzapfel et al.
+

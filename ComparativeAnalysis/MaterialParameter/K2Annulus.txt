@@ -1,0 +1,9 @@
+65 # O'Connel et al., 2009
+90 # O'Connel et al., 2012
+190 # Malandrino et al., 2013
+10 # Malandrino et al., 2013
+200.588 # Vinyas et al., 2023
+11 # Moramarco et al., 2010
+421.8 # Rao et al., 2012 (anterior) 
+648 # Rao et al., 2012 (lateral)
+39.7 # Rao et al., 2012 (posterior)

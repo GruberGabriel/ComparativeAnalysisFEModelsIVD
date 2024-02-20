@@ -1,0 +1,10 @@
+0.18 # Tang et al., 2011
+0.56 # Schmidt et al., 2006
+0.18 # Schmidt et al., 2007
+0.18 # Kim, Park
+0.42 # Zhong et al.
+0.7 # Little et al.
+0.18 # Wu et al., 2016
+0.18 # Cai et al., 2020
+0.56 # Shahraki et al., 2015
+0.2 # Yang et al., 2017
