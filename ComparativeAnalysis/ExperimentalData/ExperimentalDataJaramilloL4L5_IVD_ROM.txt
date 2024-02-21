@@ -1,0 +1,6 @@
+Moment Flexion Extension LateralBending AxialRotation
+0 0 0 0 0
+2 7.32 5.47 4.39 3.21
+4 9.26 6.77 5.77 4.51
+6 10.76 7.65 6.58 5.43
+8 11.87 8.27 7.1 5.79
