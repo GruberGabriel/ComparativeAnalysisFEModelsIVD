@@ -62,7 +62,7 @@ CalParameters = 5:7; % NP-definition from the first model & af-groundsubstance f
 CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 StartConfiguration = zeros(1,11);
 StartConfiguration(1:4) = LinRebConfiguration_2(1:4);
-[BestRsquared_NonLinReb1, NonLinRebConfiguration_1] = CalibrationMaterialParameters(3, StartConfiguration, MaxNGenerations_1, 20, RsquaredThreshold_1, CalParameters, Step);
+[BestRsquared_NonLinReb1, NonLinRebConfiguration_1] = CalibrationMaterialParameters(3, StartConfiguration, MaxNGenerations_2, 20, RsquaredThreshold_1, CalParameters, Step);
 % 2nd step: fiber angle variation
 Step = 2;
 CalParameters = 9:11;
