@@ -15,9 +15,9 @@ function NumResultsArray = ProcessNumResults(NumResults_temp, Moment)
         end
     end
     
-    % Check if the simulation did not converge 80%. If so, set the range of motion to zero
+    % Check if the simulation did not converge 75%. If so, set the range of motion to zero
     for i = 1:length(fields)
-        if isempty(NumResults_temp.(fields{i}){1,1}) || NumResults_temp.(fields{i}){1,1}(end) < 0.8
+        if isempty(NumResults_temp.(fields{i}){1,1}) || NumResults_temp.(fields{i}){1,1}(end) < 0.75
             NumResults_temp.(fields{i}){1,1} = zeros(5, 1);
             if contains(fields{i},'Flexion') || contains(fields{i}, 'IDP')
                 NumResults_temp.(fields{i}){1,2} = linspace(0, -10, 5)';
@@ -60,7 +60,7 @@ function NumResultsArray = ProcessNumResults(NumResults_temp, Moment)
         end
         if isnan(NumResults.(fields{i}){1,1}(end))
             NumResultsArray(:, i) = zeros(size(Moment));
-        elseif 0.8 * MaxMoment < s*NumResults.(fields{i}){1,1}(end) && s*NumResults.(fields{i}){1,1}(end) < MaxMoment * 0.99999999999999
+        elseif 0.75 * MaxMoment < s*NumResults.(fields{i}){1,1}(end) && s*NumResults.(fields{i}){1,1}(end) < MaxMoment * 0.99999999999999
             FitFun = fit(NumResults.(fields{i}){1,1}, s*NumResults.(fields{i}){1,a}, 'poly2');
             % Extract the coefficients of the fit function
             coeffvals = coeffvalues(FitFun);
