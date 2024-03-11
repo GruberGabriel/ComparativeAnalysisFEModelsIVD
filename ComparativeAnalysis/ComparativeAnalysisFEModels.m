@@ -43,7 +43,7 @@ CalParameters = intersect(CalParameters, CalibrationParametersHGO);
 % Calibration of the linear Rebar model
 % 1st step: all parameters except fiber angle variation
 Step = 1;
-CalParameters = 3:7; % NP-definition from the first model
+CalParameters = 3:8; % NP-definition from the first model
 CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 StartConfiguration = zeros(1,11);
 StartConfiguration(1:2) = HGOConfiguration_2(1:2);
@@ -58,7 +58,7 @@ CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 % Calibration of the non-linear Rebar model
 % 1st step: all parameters except fiber angle variation
 Step = 1;
-CalParameters = 5:7; % NP-definition from the first model & af-groundsubstance from the second model
+CalParameters = 5:8; % NP-definition from the first model & af-groundsubstance from the second model
 CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 StartConfiguration = zeros(1,11);
 StartConfiguration(1:4) = LinRebConfiguration_2(1:4);
