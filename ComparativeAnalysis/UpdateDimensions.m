@@ -4,12 +4,12 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
     if Modeltype == 1
         % nodes = load('nodesHGOModel.mat');
         FilenameINP = 'NodesHGO.inp';
-        nodes = ReadNodes(FilenameINP);
     else
         % nodes = load('nodesRebarModel.mat'); 
         FilenameINP = 'NodesRebar.inp';
-        nodes = ReadNodes(FilenameINP);
     end
+
+    nodes = ReadNodes(FilenameINP);
 
     % Get center point of nodes-cloud
     center = mean(nodes(:,2:end));
