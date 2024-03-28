@@ -23,14 +23,14 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     MatParameters = vertcat(MatParameters{:});
 
     % Initialize arrays for ROM and IDP results
-    ROMFlexion = zeros(numel(ParameterLabels), 3);
-    ROMExtension = zeros(numel(ParameterLabels), 3);
-    ROMLateralBending = zeros(numel(ParameterLabels), 3);
-    ROMAxialRotation = zeros(numel(ParameterLabels), 3);    
-    IDPFlexion = zeros(numel(ParameterLabels), 3);
-    IDPExtension = zeros(numel(ParameterLabels), 3);
-    IDPLateralBending = zeros(numel(ParameterLabels), 3);
-    IDPAxialRotation = zeros(numel(ParameterLabels), 3);
+    ROMFlexion = zeros(numel(ParameterLabels), NVariations+1);
+    ROMExtension = zeros(numel(ParameterLabels), NVariations+1);
+    ROMLateralBending = zeros(numel(ParameterLabels), NVariations+1);
+    ROMAxialRotation = zeros(numel(ParameterLabels), NVariations+1);    
+    IDPFlexion = zeros(numel(ParameterLabels), NVariations+1);
+    IDPExtension = zeros(numel(ParameterLabels), NVariations+1);
+    IDPLateralBending = zeros(numel(ParameterLabels), NVariations+1);
+    IDPAxialRotation = zeros(numel(ParameterLabels), NVariations+1);
     
     % Defining the loading
     MaxMoment = 5; % declaration of the moment-loading in Nm    
