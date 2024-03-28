@@ -135,7 +135,7 @@ function [Result_Flex,Result_Ext,Result_LB,Result_AR]=EvaluateFunctionSensitivit
     % Get numerical Results
     Moment = linspace(0,MaxMoment,MaxMoment+1);
     NumResults = ProcessNumResults(NumResults_temp,Moment);        
-    % Select the ROM-angle in the end-position for each loading direction
+    % Select the result in the end-position for each loading direction
     Result_Flex = NumResults(end,1);
     Result_Ext = NumResults(end,2);
     Result_LB = NumResults(end,3);
