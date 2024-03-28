@@ -47,7 +47,7 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     UpdatePropertiesIVD(Modeltype, MatParameters(:,1));
     ResultsType = {'ROM', 'IDP'};
     RunProcessSimulations(Modelname, LoadNames, 1); % run simulation & process results
-    % Read the rpt files that contain the ROM-results  
+    % Read the rpt files that contain the ROM- and IDP-results  
     [NumResultsROM, NumResultsIDP] = ReadResults(Modelname, LoadNames, ResultsType);
 
     % Evaluating the ROM-data from simulations
