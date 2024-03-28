@@ -16,10 +16,7 @@ function CalibrationParameters = ResultsAnalysis(Modeltype, ResultsData, MatPara
         data = cell2mat(ResultsData(1, i));      
         deltaData = (data(:, 2:end) - data(:, 1)) ./ data(:, 1);
         deltaParam = (MatParameter(:, 2:end) - MatParameter(:, 1)) ./ MatParameter(:, 1);
-        SensitivityArray(i, :) = mean(transpose(deltaData ./ deltaParam)); % using mean along the first dimension
-        % sensitivity = ((data(:, 2:end) - data(:, 1)) ./ data(:, 1)) ./ ((MatParameter(:, 2:end) - MatParameter(:, 1)) ./ MatParameter(:, 1));
-        % SensitivityArray(i, :) = mean(transpose(sensitivity));
-                
+        SensitivityArray(i, :) = mean(transpose(deltaData ./ deltaParam)); % using mean along the first dimension               
     end
     % Write sensitivity to Excel file
     sensitivityFilename = fullfile(pwd, 'ExcelFiles', 'SensitivityAnalysis', sprintf('Sensitivity%s.xlsx', ResultsType));
