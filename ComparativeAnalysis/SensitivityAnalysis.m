@@ -45,7 +45,6 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     
     %% Simulate LoadCases with median-configuration
     UpdatePropertiesIVD(Modeltype, MatParameters(:,1));
-    LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     ResultsType = {'ROM', 'IDP'};
     RunProcessSimulations(Modelname, LoadNames, 1); % run simulation & process results
     % Read the rpt files that contain the ROM-results  
