@@ -23,8 +23,8 @@ The code features a model that employs the anisotropic Holzapfel-Gasser-Ogden (H
 ## Usage Instructions
 To utilize this repository for simulation purposes, follow these steps:
 
-- **Main Script**: The primary file to execute is "ComparativeAnalysisFEModels.m". Running this script initiates the simulation pipeline.
-- **Settings Adjustment**: Within this main file, you can adjust settings such as the geometric dimensions of the disc to tailor the simulations to specific needs.
+- **Main Script**: The primary file to execute is "ComparativeAnalysisFEModels.m". Running this script starts the simulation pipeline.
+- **Settings Adjustment**: Within this main file, you can adjust settings such as the geometric dimensions of the disc to adapt the simulations to the specific needs.
 - **Preparation**: Ensure to review and configure the "RunProcessSimulations.m" file before starting the simulations. This file controls the launch of the Abaqus simulations and includes settings for the number of CPUs and GPU acceleration. Adjust these settings based on the capabilities of your machine to optimize performance.
 
 ## Software Versions
