@@ -1,6 +1,6 @@
 function [RsquaredValues,TimeValues] = ProcessValidationConfigurationROM(MatConfiguration, Modeltype)
     
-    % Sets a breakpoint if there is an error
+    % Breakpoint if there is an error
     dbstop if error;
     
     % Select list of parameter-labels based on the modeltype
@@ -49,7 +49,6 @@ function [RsquaredValues,TimeValues] = ProcessValidationConfigurationROM(MatConf
     
     LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     LoadAxis = [4, 4, 6, 5];
-
     for j = 1:length(LoadNames)        
         InputFile_1 = ['Job', Modelname, LoadNames{j}, '.inp'];
         MomentValue = (strcmp(LoadNames{j}, 'Extension') * -1 + ~strcmp(LoadNames{j}, 'Extension')) * MaxMoment * 1000;
@@ -57,7 +56,6 @@ function [RsquaredValues,TimeValues] = ProcessValidationConfigurationROM(MatConf
     end   
     
     % Run Abaqus for different loading directions & Generate the rpt files from Abaqus by running the python macro
-    LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     RunProcessSimulations(Modelname, LoadNames, 0);
 
     % Read the rpt files for Flexion, Extension, Axial Rotation, and Lateral Bending
@@ -72,13 +70,12 @@ function [RsquaredValues,TimeValues] = ProcessValidationConfigurationROM(MatConf
     % Evaluating the fitness score of the created individuals
     [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR] =...
         EvaluateObjectiveFunctionValidation(NumResults,ExpResults,ParameterLabels,MatConfiguration,Modelname,"Validation",ExpResultsStd);
-
     RsquaredValues = [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR];
 
     % Copy odb and rpt-files with specific name
     NewFileName(Modelname, 'Validation');
 
-    % Get time values for each loadcase
+    % Get time values for each load-case
     TimeValues = zeros(1, length(LoadNames));
     for j=1:length(LoadNames) 
         fileID = ['./SimulationFiles/Job', Modelname, cell2mat(LoadNames(j)), '.dat'];

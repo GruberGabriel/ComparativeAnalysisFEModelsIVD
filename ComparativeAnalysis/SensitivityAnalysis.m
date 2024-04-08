@@ -1,6 +1,6 @@
 function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
 
-    % Sets a breakpoint if there is an error
+    % Breakpoint if there is an error
     dbstop if error;
     
     % Select list of parameter-labels based on the modeltype
@@ -17,8 +17,8 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     end
     
     % Define Material-Parameters
-    NVariations = 4; % define number of variations for each parameter
-    RangeWidth = 0.5; % define outermost scaling-factor for parameter-variations
+    NVariations = 4; % Define number of variations for each parameter
+    RangeWidth = 0.5; % Define outermost scaling-factor for parameter-variations
     MatParameters = arrayfun(@(x) CalculateMaterialParameters(ParameterLabels{x}, NVariations, RangeWidth), 1:numel(ParameterLabels), 'UniformOutput', false);
     MatParameters = vertcat(MatParameters{:});
 
@@ -33,10 +33,10 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     IDPAxialRotation = zeros(numel(ParameterLabels), NVariations+1);
     
     % Defining the loading
-    MaxMoment = 5; % declaration of the moment-loading in Nm    
+    MaxMoment = 5; % Declaration of the moment-loading in Nm    
     LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     LoadAxis = [4, 4, 6, 5];
-
+    % Modify loading for each load-case
     for j = 1:length(LoadNames)        
         InputFile_1 = ['Job', Modelname, LoadNames{j}, '.inp'];
         MomentValue = (strcmp(LoadNames{j}, 'Extension') * -1 + ~strcmp(LoadNames{j}, 'Extension')) * MaxMoment * 1000;
@@ -44,9 +44,9 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     end 
     
     %% Simulate LoadCases with median-configuration
-    UpdatePropertiesIVD(Modeltype, MatParameters(:,1));
+    UpdatePropertiesIVD(Modeltype, MatParameters(:,1)); % Update mechanical properties for median-configuration
     ResultsType = {'ROM', 'IDP'};
-    RunProcessSimulations(Modelname, LoadNames, 1); % run simulation & process results
+    RunProcessSimulations(Modelname, LoadNames, 1); % Run simulation & process results
     % Read the rpt files that contain the ROM- and IDP-results  
     [NumResultsROM, NumResultsIDP] = ReadResults(Modelname, LoadNames, ResultsType);
 
@@ -55,8 +55,7 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     close all;    
     % Evaluating the IDP-data from simulations
     [IDPFlexion(:,1),IDPExtension(:,1),IDPLateralBending(:,1),IDPAxialRotation(:,1)]=EvaluateFunctionSensitivity(NumResultsIDP,MaxMoment);
-    close all;    
-    
+    close all;        
 
     %% Starting the simulation & processing loop for max & min parameter-values
     % (OFAT)
@@ -69,7 +68,6 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
             % Update mechanical properties of the model
             UpdatePropertiesIVD(Modeltype, MatConfiguration);                    
             % Run Abaqus for different loading directions & Generate the rpt files from Abaqus by running the python macro
-            LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
             RunProcessSimulations(Modelname, LoadNames, 1);    
             % Read the rpt files that contain the ROM-results of Abaqus simulation
             [NumResultsROM, NumResultsIDP] = ReadResults(Modelname, LoadNames, ResultsType);
@@ -94,7 +92,7 @@ function ToBeCalibrated = SensitivityAnalysis(Modeltype, SensitivityLimit)
     end    
     
     %% Results-Analysis
-    ResultsType = {'ROM', 'IDP'}; % define types of results -->required for visualization 
+    ResultsType = {'ROM', 'IDP'}; % Define types of results -->required for visualization 
     ResultsData = cell(size(LoadNames));
     CalibrationParameters = struct();
     ToBeCalibrated = [];

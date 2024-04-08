@@ -30,7 +30,6 @@ function CompareValidationROMResults()
     NumResults = cell(1, length(ModelNames));
     
     for i = 1:length(ModelNames)
-
         % Read the rpt files for Flexion, Extension, Axial Rotation, and Lateral Bending
         for j=1:length(LoadNames)
             LoadName = LoadNames{j};

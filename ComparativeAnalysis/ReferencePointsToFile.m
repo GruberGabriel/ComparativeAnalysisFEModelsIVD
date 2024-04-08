@@ -3,15 +3,12 @@ function ReferencePointsToFile(RP1, RP2, filename)
     if ~endsWith(filename, '.inp')
         filename = strcat(filename, '.inp');
     end
-
     % Open the file
-    fileID = fopen(filename, 'w');
-    
+    fileID = fopen(filename, 'w');    
     % Check if file is opened
     if fileID == -1
-        error('Fehler beim Öffnen der Datei.');
+        error('File opening error.');
     end
-
     % Write the lines into file using RP1 and RP2 for coordinates
     fprintf(fileID, '*Node\n');
     fprintf(fileID, '1,   %.7f,   %.7f,   %.7f\n', RP1(1), RP1(2), RP1(3));
@@ -21,7 +18,6 @@ function ReferencePointsToFile(RP1, RP2, filename)
     fprintf(fileID, '1,\n');
     fprintf(fileID, '*Nset, nset=RP-Encastre\n');
     fprintf(fileID, '2,\n');
-
     % close the file
     fclose(fileID);
 end

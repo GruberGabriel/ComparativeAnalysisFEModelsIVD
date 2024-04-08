@@ -1,6 +1,6 @@
 function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Modeltype, StartConfiguration, MaxNGenerations, Npop, Tol, CalParameters, Step)
 
-    % Sets a breakpoint if there is an error
+    % Breakpoint if there is an error
     dbstop if error;
 
     % Select list of parameter-labels based on the modeltype
@@ -25,10 +25,8 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
 
     % Get the ranges (upper and lower limit) for the different parameters
     ParameterRanges = cellfun(@GetParameterRanges, ParameterLabels, 'UniformOutput', false);
-
     % Initialize an empty matrix for bounds
-    Bounds = zeros(2, length(ParameterRanges));
-    
+    Bounds = zeros(2, length(ParameterRanges));    
     % Loop through each entry in ParameterRanges
     for i = 1:length(ParameterRanges)
         % Append each parameter range to the Bounds matrix
@@ -82,7 +80,6 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
     
     LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     LoadAxis = [4, 4, 6, 5];
-
     for j = 1:length(LoadNames)        
         InputFile_1 = ['Job', Modelname, LoadNames{j}, '.inp'];
         MomentValue = (strcmp(LoadNames{j}, 'Extension') * -1 + ~strcmp(LoadNames{j}, 'Extension')) * MaxMoment * 1000;
@@ -107,20 +104,18 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
         fclose(fid);
         StartingChromosomes = cell2mat(StartingChromosomes);
         Chromosomes(1:size(StartingChromosomes,1),1:size(StartingChromosomes,2))= StartingChromosomes;    
-    end
-   
+    end   
     % Initialize structure for numerical results
     NumResults = struct();
 
     % Starting the generation loop
-    for l=1:MaxNGenerations
-        
+    for l=1:MaxNGenerations        
         % Write a table with the chromosomes
         Table = array2table(Chromosomes,'VariableNames',ParameterLabels);
         chromosomesFileName = fullfile('.', 'Chromosomes', ['MaterialChromosomes', Modelname,'_Step_', num2str(Step), '_Generation_', num2str(l), '.txt']);
-        writetable(Table, chromosomesFileName);
-        
-        % Deciding if we are working with the initial generation
+        writetable(Table, chromosomesFileName);        
+        % Deciding if we are working with the initial generation --> adjust
+        % start of inner-loop
         if l==1 
             j=1;
         else
@@ -128,17 +123,13 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
         end
     
         for i=j:Npop   
-
-            % define properties-vector based on chromosomes
+            % Define properties-vector based on chromosomes
             x = FixedParameterValues;
             x(:, CalParameters) = Chromosomes(i, :);
-
-            UpdatePropertiesIVD(Modeltype, x); 
-            
+            % Update mechanical properties
+            UpdatePropertiesIVD(Modeltype, x);             
             % Run jobs for different loading directions & Generate the rpt files
-            LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
             RunProcessSimulations(Modelname, LoadNames, 0);
-
             % Read the rpt files for each loading direction
             for k = 1:length(LoadNames)
                 LoadName = LoadNames{k};
@@ -147,27 +138,22 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
                 NumResults.(LoadName) = textscan(fid, '%f%f%f%f', 'HeaderLines', 2);
                 fclose(fid);
             end
-
             % Evaluating the fitness score of the created individuals
             [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR]=EvaluateObjectiveFunctionCalibration(NumResults,ExpResults,i,l,...
                 Chromosomes, ParameterLabels, Modelname, Step);
-
             % Save the results
             clear NumResults;
             RSquaredScoreData(i,:)=[Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR, l,i];
-        end
-        
+        end        
         % Present the fitness score and the characteristics of the actual generation
         if l==1 
             ResultsOne(1:Npop,:)=[RSquaredScoreData,Chromosomes];
         else
             ResultsOne(Npop+(Npop-NSelection)*(l-2)+1:Npop+(Npop-NSelection)*(l-1),:)=[RSquaredScoreData(NSelection+1:end,:),Chromosomes(NSelection+1:end,:)];
-        end
-        
+        end        
        % Rank the individuals based on their fitness score
         [~, idx] = sort(ResultsOne(:, 1), 'descend');
         RankedResults = ResultsOne(idx, :);
-
         % Create Labels for .xlsx-file
         ParameterLabels_Results = {'Rsquared', 'RsquaredFlex', 'RsquaredExt', 'RsquaredLB', 'RsquaredAR', 'Generation', 'Individual'};
         ParameterLabels_Results = cat(2, ParameterLabels_Results, ParameterLabels);                
@@ -175,16 +161,13 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
         Results = array2table(RankedResults,'VariableNames',ParameterLabels_Results);        
         % Write the table to an Excel file
         excelFileName = fullfile('.', 'ExcelFiles', 'Calibration', ['MaterialCalibration', Modelname,'Step', num2str(Step), 'Generation', num2str(l), '.xlsx']);
-        writetable(Results, excelFileName, 'Sheet', 'Sheet1', 'WriteVariableNames', true);
-    
+        writetable(Results, excelFileName, 'Sheet', 'Sheet1', 'WriteVariableNames', true);    
         % Select the best chromosome
-        Best_chromosome = RankedResults(1,:);
-       
+        Best_chromosome = RankedResults(1,:);       
         % select return variables
         BestRsquared = RankedResults(1,1);
         FinalConfiguration = FixedParameterValues;
-        FinalConfiguration(:, CalParameters) = Best_chromosome(8:end);
-                
+        FinalConfiguration(:, CalParameters) = Best_chromosome(8:end);                
         % Check GA convergence
         if round(BestRsquared,2)>=Tol
             disp('Your simulation has converged.');
@@ -201,8 +184,7 @@ function [BestRsquared, FinalConfiguration] = CalibrationMaterialParameters(Mode
             % Immigration
             ImmigratedChrom = Immigration(NImmigration, Bounds);
             % Update the Chromosomes matrix by writing the new individuals
-            Chromosomes = [SelectedChromosomes; CrossedChrom; MutatedChrom; ImmigratedChrom];
-            
+            Chromosomes = [SelectedChromosomes; CrossedChrom; MutatedChrom; ImmigratedChrom];            
             % Write a table with the chromosomes
             Table = array2table(Chromosomes,'VariableNames',ParameterLabels);
             chromosomesFileName = fullfile('.', 'Chromosomes', ['MaterialChromosomes', Modelname,'_Step_', num2str(Step), '_Generation_', num2str(l+1), '.txt']);

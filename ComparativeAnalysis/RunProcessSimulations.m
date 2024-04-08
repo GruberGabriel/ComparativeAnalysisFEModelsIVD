@@ -17,7 +17,7 @@ function RunProcessSimulations(ModelName, LoadNames, IncludeIDP)
     for i=1:length(LoadNames)
         LoadName = LoadNames{i};
         JobName = ['Job', ModelName, LoadName];
-        cmd = ['abaqus job=', JobName , ' interactive cpus=8 gpus=1 ask_delete=OFF'];
+        cmd = ['abaqus job=', JobName , ' interactive cpus=8 gpus=1 ask_delete=OFF']; % Adapt the number of cpus and the activation of gpu-support if required
         dos(cmd);
     end
 

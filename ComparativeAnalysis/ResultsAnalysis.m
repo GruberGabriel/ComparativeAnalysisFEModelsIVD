@@ -74,10 +74,10 @@ function CalibrationParameters = ResultsAnalysis(Modeltype, ResultsData, MatPara
     if ALim_min > ALim_min_0 || (ALim_min- ALim_min_0) > -0.05
         ALim_min = ALim_min - 0.2;
     end
-    if round(mod(ALim_max/0.1, 2), 3)%abs(mod(ALim_max/0.1,2) - round(mod(ALim_max/0.1,2))) < eps
+    if round(mod(ALim_max/0.1, 2), 3) % Check if axis-limit has to be adjusted
         ALim_max = ALim_max + 0.1;
     end
-    if round(mod(ALim_min/0.1, 2), 3)%abs(mod(ALim_min/0.1,2) - round(mod(ALim_min/0.1,2))) < eps
+    if round(mod(ALim_min/0.1, 2), 3) % Check if axis-limit has to be adjusted
         ALim_min = ALim_min - 0.1;
     end
      
@@ -87,7 +87,7 @@ function CalibrationParameters = ResultsAnalysis(Modeltype, ResultsData, MatPara
     rlim([ALim_min, ALim_max]);
     n = round((ALim_max - ALim_min) / 0.2) + 1;
     rticks(linspace(ALim_min, ALim_max, n));
-    set(gca, 'FontSize', 14); % set fontsize for rticks
+    set(gca, 'FontSize', 14); % Set fontsize for rticks
     pax.GridAlpha = 0.5; % Set the transparency of the grid lines
 
     % Add legend with increased space
@@ -100,8 +100,8 @@ function CalibrationParameters = ResultsAnalysis(Modeltype, ResultsData, MatPara
     rruler = ax.RAxis;
     rruler.Label.String = sprintf('S_{R,P}');
     PositionScaling = (ALim_max + abs(ALim_min))*0.9+ALim_min;
-    rruler.Label.Position = [-7.5, PositionScaling, 5]; % position the label of the axis
-    set(rruler.Label, 'Fontsize', 16); % set fontsize for axis-label
+    rruler.Label.Position = [-7.5, PositionScaling, 5]; % Position the label of the axis
+    set(rruler.Label, 'Fontsize', 16); % Set fontsize for axis-label
     pax.ThetaTickLabel = [];
     
     % Add parameter labels around the plot

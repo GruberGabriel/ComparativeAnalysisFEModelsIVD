@@ -27,7 +27,7 @@ function ParameterArray = CalculateMaterialParameters(ParameterName, NVariations
     else
         % Calculate range for variation-scaling
         Range = linspace(1 - RangeWidth, 1 + RangeWidth, NVariations + 1);
-        Range(ceil(NVariations / 2) + 1) = []; % remove the middle element
+        Range(ceil(NVariations / 2) + 1) = []; % Remove the middle element
         ParameterArray(2:end) = Range * ParameterMedian;
     end
 end

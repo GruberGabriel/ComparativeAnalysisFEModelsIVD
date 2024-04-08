@@ -227,7 +227,7 @@ function [xK1Rad, xK2Rad]=CalculateHGOStiffnessVariation(numSubregions, numLayer
 end
 
 function EModFibers = CalculateLinRebarStiffnessVariation(numSubregions, numLayers, Lambda, LambdaCirc, LambdaRad)
-    EModFibers_0 = 450; % starting Young's modulus
+    EModFibers_0 = 450; % Starting Young's modulus --> based on fitting stress-strain data from Shirazi-Adl et al., 1986
     StepCirc = 1:numSubregions;
     StepRad = 1:numLayers;        
     XLambdaCirc = Lambda + LambdaCirc * Lambda * (StepCirc - 1);
@@ -245,7 +245,7 @@ function [FiberStrain, FiberStress_0, XLambdaRad] = CalculateNonLinRebarStiffnes
         0.1765,	0.1912,	0.2059, 0.2206,	0.2353,	0.2500,	0.2647,	0.2785,	0.2924,	0.3062,	0.3201,	0.3339,...
         0.3478,	0.3616,	0.3754,	0.3893,	0.4031,	0.4170,	0.4308,	0.4446,	0.4585,	0.4723,	0.4862,	0.5000]);
     
-    FiberStress_0 = transpose([-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001, ...
+    FiberStress_0 = transpose([-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001,-0.00001, ... % required to define tension-only behaviour
         0.00,	13.19,	26.38,	39.57,	49.77,	57.97,	66.17,	73.59,	77.86,	82.14,	86.41,	89.55,...
         92.41,	95.26,	97.54,	98.97,	100.39,	101.82,	103.25,	104.59,	105.93,	107.27,	108.62,	109.96,...
         111.30,	112.64,	113.99,	115.33,	116.67,	118.01,	119.36,	120.70,	122.04,	123.38,	124.73,	126.07]);

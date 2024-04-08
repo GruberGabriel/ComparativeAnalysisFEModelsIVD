@@ -1,11 +1,8 @@
 function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
 
-    % Loading original nodes --> stored in .mat-file (to save some time)
     if Modeltype == 1
-        % nodes = load('nodesHGOModel.mat');
         FilenameINP = 'NodesHGO.inp';
     else
-        % nodes = load('nodesRebarModel.mat'); 
         FilenameINP = 'NodesRebar.inp';
     end
 
@@ -45,23 +42,21 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
 
     % Iterate through each node and apply the rotation
     for i = 1:size(TranslatedNodes, 1)
-        node = TranslatedNodes(i, 2:end);
-        
+        node = TranslatedNodes(i, 2:end);        
         % Apply the rotation using the rotation matrix R_x
-        rotatedNode = (R_x * node')';
-        
+        rotatedNode = (R_x * node')';        
         % Store the rotated node in the RotatedNodes array
         RotatedNodes(i, :) = rotatedNode;
-    end
-    
+    end    
     RotatedNodes = [TranslatedNodes(:,1), RotatedNodes];
-
+    
+    %% Scale rotated nodes
     % Find lateral diametre by using the max and min x-coordinates
     [minX, idxMinX] = min(RotatedNodes(:, 2));
     [maxX, idxMaxX] = max(RotatedNodes(:, 2));    
     LateralWidth_0 = maxX + abs(minX);    
     % Find sagittal diametre by using the max and min z-coordinates
-    FilteredNodes = RotatedNodes(abs(RotatedNodes(:, 2)) < 0.2, :); % filtering the nodes in the centre-plane
+    FilteredNodes = RotatedNodes(RotatedNodes(:, 2) >= -0.5 & RotatedNodes(:, 2) <= 0.5,:); % filtering the nodes in the centre-plane
     [minZ, idxMinz] = min(FilteredNodes(:, 4));
     [maxZ, idxMaxz] = max(FilteredNodes(:, 4));    
     SagittalWidth_0 = maxZ + abs(minZ);        
@@ -72,18 +67,18 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
     [minY, idxMinY] = min(FilteredNodes(:, 3));
     [maxY, idxMaxY] = max(FilteredNodes(:, 3));    
     AverageHeight_0 = maxY + abs(minY);
-
     % Scaling the ivd-geometry 
     % RotatedNodes_0  = RotatedNodes;
     RotatedNodes(:,2) = RotatedNodes(:,2) * LateralWidth / LateralWidth_0;
     RotatedNodes(:,3) = RotatedNodes(:,3) * DiscHeight / AverageHeight_0;
-    RotatedNodes(:,4) = RotatedNodes(:,4) * SagittalWidth / SagittalWidth_0;
-    
+    RotatedNodes(:,4) = RotatedNodes(:,4) * SagittalWidth / SagittalWidth_0;    
 
     % ReferencePoints: RP1 (above) & RP2 (below)
     % by using nodes with x and z = 0 in rotated configuration
     RoundedNodes = round(RotatedNodes(:,2:end),0);
-    FilteredNodes = RotatedNodes(RoundedNodes(:, 1) == 0 & RoundedNodes(:, 3) == 0, :);
+    FilteredNodes = RotatedNodes(...
+        RoundedNodes(:, 1) >= -1 & RoundedNodes(:, 1) <= 1 & ...
+        RoundedNodes(:, 3) >= -1 & RoundedNodes(:, 3) <= 1, :);
     [minY, idxMinY] = min(FilteredNodes(:, 3));
     [maxY, idxMaxY] = max(FilteredNodes(:, 3));
     
@@ -91,8 +86,7 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
     nodeWithMaxY_RP = FilteredNodes(idxMaxY, :);
     
     RP1 = nodeWithMaxY_RP(2:end) + [0, 10, 0];
-    RP2 = nodeWithMinY_RP(2:end) - [0, 10, 0];
-    
+    RP2 = nodeWithMinY_RP(2:end) - [0, 10, 0];    
 
     % RotateBack
     RotatedBackNodes = RotatedNodes(:,2:end);
@@ -101,11 +95,9 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
     R_x = [1, 0, 0; 0, cos(theta), -sin(theta); 0, sin(theta), cos(theta)];
     % Iterate through each node and apply the rotation
     for i = 1:size(RotatedBackNodes, 1)
-        node = RotatedNodes(i, 2:end);
-        
+        node = RotatedNodes(i, 2:end);        
         % Apply the rotation using the rotation matrix R_x
-        rotatedNode = (R_x * node')';
-        
+        rotatedNode = (R_x * node')';        
         % Store the rotated node in the RotatedNodes array
         RotatedBackNodes(i, :) = rotatedNode;
     end
@@ -118,17 +110,15 @@ function UpdateDimensions(DiscHeight,LateralWidth,SagittalWidth, Modeltype)
     % Translation of the rotated scaled nodes back to inital position
     TranslatedBackNodes = RotatedBackNodes(:,2:end);    
     TranslatedBackNodes = TranslatedBackNodes + center_diff;    
-    TranslatedBackNodes = [RotatedBackNodes(:,1), TranslatedBackNodes];
-    
+    TranslatedBackNodes = [RotatedBackNodes(:,1), TranslatedBackNodes];    
     %  Translate RP1&2 back to initial-configuration
     RP1 = RP1 + center_diff;
     RP2 = RP2 + center_diff;
 
-    % using customized function to write nodes into .inp-file (-->file is
+    % Using customized function to write nodes into .inp-file (-->file is
     % embedded into Model-.inp-file -->parametrization of nodes
     ScaledNodesToFile(TranslatedBackNodes, FilenameINP);
-
-    % using customized function to write coordinates for RP1 and RP2 to
+    % Using customized function to write coordinates for RP1 and RP2 to
     % .inp-file (-->file is embedded into Model-.inp-file)
     ReferencePointsToFile(RP1, RP2, 'ReferencePoints.inp');    
 end

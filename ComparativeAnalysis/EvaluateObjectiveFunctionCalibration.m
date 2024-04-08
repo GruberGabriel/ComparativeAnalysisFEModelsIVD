@@ -1,4 +1,6 @@
 function [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR]=EvaluateObjectiveFunctionCalibration(NumResults_temp,ExpResults,i,l,Chromosomes, ParameterLabels, Modelname, Step)
+    % Function with objective function to evaluate the RoM-results of a
+    % specific configuration during calibration
     
     % Obtain the vector moment
     Moment=ExpResults.Moment{1,1};

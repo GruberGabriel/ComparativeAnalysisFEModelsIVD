@@ -1,11 +1,9 @@
 function MutatedChrom=Mutation(OldChrom,Bounds)
     
     % Number of individuals to be mutated and Chromosome length
-    n=size(OldChrom); 
-    
+    n=size(OldChrom);     
     % Generate variables
-    MutatedChrom=OldChrom;
-    
+    MutatedChrom=OldChrom;    
     for i=1:n(1,1)
         % Randomly choose one site on the genetic string
         MutationPoint=((n(1,2)-1)).*rand(1,1) + 1;
@@ -15,5 +13,4 @@ function MutatedChrom=Mutation(OldChrom,Bounds)
         % Mutate the individual by adding the new characteristic
         MutatedChrom(i,MutationPoint1)=NewValue;
     end
-
 end

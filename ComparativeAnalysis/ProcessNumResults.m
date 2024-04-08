@@ -68,14 +68,14 @@ function NumResultsArray = ProcessNumResults(NumResults_temp, Moment)
             if contains(fields{i}, 'IDP')
                 NumResultsArray(:, i) = (coeffvals(1,1) * Moment.^2 + coeffvals(1,2) * Moment + coeffvals(1,3));
             else
-                NumResultsArray(:, i) = (coeffvals(1,1) * Moment.^2 + coeffvals(1,2) * Moment + coeffvals(1,3)) * 180 / pi();
+                NumResultsArray(:, i) = (coeffvals(1,1) * Moment.^2 + coeffvals(1,2) * Moment + coeffvals(1,3)) * 180 / pi(); % convert RoM-results in degree
             end
         else
             FitFun = fit(NumResults.(fields{i}){1,1}, s*NumResults.(fields{i}){1,a}, 'spline');
             if contains(fields{i}, 'IDP')
                 NumResultsArray(:, i) = feval(FitFun, Moment);
             else
-                NumResultsArray(:, i) = feval(FitFun, Moment) * 180 / pi();
+                NumResultsArray(:, i) = feval(FitFun, Moment) * 180 / pi(); % convert RoM-results in degree
             end
         end
     end

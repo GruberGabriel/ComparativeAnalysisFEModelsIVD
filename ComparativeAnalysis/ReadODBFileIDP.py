@@ -29,7 +29,7 @@ def ReadODBFileIDP(LoadName): # IDP-data
     max = 0
     i = 1
 
-    # Loop through 27 integration points to find the maximum pressure value
+    # Loop through 27 integration points (quadratic hexaeder) to find the maximum pressure value
     for j in range(1,28):
         # Construct output variable name for pressure at specific integration point
         ovName = 'SINV: PRESS PI: IVD_L4L5 Element ' + str(eID) + ' Int Point ' + str(j) + ' in ELSET NP-CENTER'

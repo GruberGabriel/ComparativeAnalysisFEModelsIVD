@@ -1,5 +1,7 @@
 function [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR]=EvaluateObjectiveFunctionValidation(NumResults_temp,ExpResults,ParameterLabels,MatConfiguration,Modelname,Section,ExpResultsStd)
-    
+    % Function with objective function to evaluate the RoM-results of the 
+    % final configurations during validation
+
     % Obtain the vector moment
     Moment=ExpResults.Moment{1,1};
 
@@ -14,10 +16,10 @@ function [Rsquared, Rsquared_Flex, Rsquared_Ext, Rsquared_LB, Rsquared_AR]=Evalu
     
     %% Plot ROM-moment curves for different loading directions
     if Section == "Calibration"
-        stepsize = max(Moment)/3; % define stepsize for xticks
+        stepsize = max(Moment)/3; % Define stepsize for xticks
         figName = fullfile(pwd, '.', 'ResultsGraphs', 'Calibration', ['Configuration', Modelname, 'Calibration','.png']);
     elseif Section == "Validation"
-        stepsize = max(Moment)/4; % define stepsize for xticks
+        stepsize = max(Moment)/4; % Define stepsize for xticks
         figName = fullfile(pwd, '.', 'ResultsGraphs', 'Validation', ['Configuration', Modelname, 'ValidationROM','.png']);
     end
     % Plot ROM-moment curves for different loading directions

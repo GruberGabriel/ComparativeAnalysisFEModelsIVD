@@ -12,7 +12,7 @@ function time = GetTime(fileID)
         if startsWith(line, 'WALLCLOCK') % Trigger: string starting time declaration
             z = z + 1;
             time_info = strsplit(line, '=');
-            if numel(time_info) == 2 && z == 2
+            if numel(time_info) == 2 && z == 2 % simulation time --> 2nd WALLCLOCK-time
                 % Extract the integer value and assign it to the 'time' variable
                 time = str2double(time_info{2});    
             end        

@@ -1,12 +1,11 @@
 function ImmigratedChrom=Immigration(N,Bounds)
-    % return empty array if number of immigrated chromosomes = 0
+    % Return empty array if number of immigrated chromosomes = 0
     if N == 0
         ImmigratedChrom = [];
     else
         % Create some variables
         NewChrom=zeros;
-        ImmigratedChrom=zeros(size(Bounds(1,:)));
-        
+        ImmigratedChrom=zeros(size(Bounds(1,:)));        
         % Generate a new random individual considering the bounds
         for j=1:N
             for i=1:size(Bounds,2)

@@ -26,14 +26,10 @@ function ModifyLoad(InputFile_0, InputFile_1, load_axis, new_value)
 
     % Write the specified file with adapted load-information
     fid = fopen(InputFile_1, 'w');
-    fprintf(fid, '%s\n', modified_lines{:});
-    fclose(fid);
-
-    % Write the specified file with adapted load-information
-    fid = fopen(InputFile_1, 'w');
     if fid == -1
         error(['Unable to open file for writing: ', InputFile_1]);
+    else
+        fprintf(fid, '%s\n', modified_lines{:});
     end
-    fprintf(fid, '%s\n', modified_lines{:});
     fclose(fid);
 end

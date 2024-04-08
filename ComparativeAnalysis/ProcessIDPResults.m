@@ -46,7 +46,7 @@ function RsquaredValues = ProcessIDPResults(MatConfiguration, Modeltype)
     LoadNames = {'Flexion', 'Extension', 'LateralBending', 'AxialRotation'};
     NumResults_temp = struct(); % Initialize struct to store results
         
-    % process IDP-results, if necessary
+    % Optional: process IDP-results
     % ProcessSimulationsIDP(ModelNames{Modeltype}, LoadNames);   
 
     % Read the rpt files for Flexion, Extension, Axial Rotation, and Lateral Bending
@@ -61,7 +61,6 @@ function RsquaredValues = ProcessIDPResults(MatConfiguration, Modeltype)
     RsquaredValues = CalculateRSquared(NumResults,ExpResultsMedian);    
     
     %% Plot ROM-moment curves for different loading directions
-    % Plot ROM-moment curves for different loading directions
     fig = figure('position', [0, 0, 800, 500]);
     
     % Flexion

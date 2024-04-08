@@ -11,16 +11,14 @@ SagittalWidth = 33.4;
 UpdateDimensions(DiscHeight, LateralWidth, SagittalWidth, 1); % HGO model
 UpdateDimensions(DiscHeight, LateralWidth, SagittalWidth, 2); % rebar-models 
 
-
 %% Sensitivity Analysis
 % perform sensitivity analyses of the different models and store the
 % parameters to be calibrated
-SensitivityLimit = 0.1;
+SensitivityLimit = 0.1; 
 % HGO model
 CalibrationParametersHGO = SensitivityAnalysis(1, SensitivityLimit);
 % Rebar model --> using only the linear rebar model
 CalibrationParametersRebar = SensitivityAnalysis(2, SensitivityLimit);
-
 
 %% Calibration of the different models
 % define calibration-settings
@@ -69,9 +67,8 @@ CalParameters = 9:11;
 CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 [BestRsquared_NonLinReb2, NonLinRebConfiguration_2] = CalibrationMaterialParameters(3, NonLinRebConfiguration_1, MaxNGenerations_2, 20, RsquaredThreshold_2, CalParameters, Step);
 
-
 %% final calibration results
-% run & evaluate simulations with final cal-configurations
+% Run & evaluate simulations with final cal-configurations
 RsquaredValuesCalibration = zeros(3,5);
 TimeValuesCalibration = zeros(3,4);
 [RsquaredValuesCalibration(1,:), TimeValuesCalibration(1,:)] = ProcessCalibrationConfiguration(HGOConfiguration_2, 1);
@@ -86,11 +83,11 @@ Results = array2table(Results,'VariableNames',ResultsLabels);
 excelFileName = fullfile('.', 'ExcelFiles', 'Calibration', ['CalibratedModelsComparison', '.xlsx']);
 writetable(Results, excelFileName, 'Sheet', 'Sheet1', 'WriteVariableNames', true);
 
-% compare the results from the final cal-configurations
+% Compare the results from the final cal-configurations
 CompareCalibrationResults;
 
-%% validation using IDP-data from Heuer et al.
-% evaluate simulations with final cal-configurations: IDP-Data from Heuer et al.
+%% Validation using IDP-data from Heuer et al.
+% Evaluate simulations with final cal-configurations: IDP-Data from Heuer et al.
 RsquaredValuesValidationIDP = zeros(3,5);
 RsquaredValuesValidationIDP(1,:) = ProcessIDPResults(HGOConfiguration_2, 1);
 RsquaredValuesValidationIDP(2,:) = ProcessIDPResults(LinRebConfiguration_2, 2);
@@ -104,11 +101,11 @@ Results = array2table(Results,'VariableNames',ResultsLabels);
 excelFileName = fullfile('.', 'ExcelFiles', 'Validation', ['CalibratedModelsValidationIDP', '.xlsx']);
 writetable(Results, excelFileName, 'Sheet', 'Sheet1', 'WriteVariableNames', true);
 
-% compare the IDP-results of the different models
+% Compare the IDP-results of the different models
 CompareValidationIDPResults;
 
 %% validation using ROM-data from Jaramillo et al.
-% run & evaluate simulations with final ROM data from Jaramillo et al.
+% Run & evaluate simulations with final ROM data from Jaramillo et al.
 RsquaredValuesValidationROMJaramillo = zeros(3,5);
 TimeValuesValidation = zeros(3,4);
 [RsquaredValuesValidationROMJaramillo(1,:), TimeValuesValidation(1,:)] = ProcessValidationConfigurationROM(HGOConfiguration_2, 1);
@@ -123,5 +120,5 @@ Results = array2table(Results,'VariableNames',ResultsLabels);
 excelFileName = fullfile('.', 'ExcelFiles',  'Validation', ['CalibratedModelsValidationROM', '.xlsx']);
 writetable(Results, excelFileName, 'Sheet', 'Sheet1', 'WriteVariableNames', true);
 
-% compare the IDP-results of the different models
+% Compare the IDP-results of the different models
 CompareValidationROMResults;

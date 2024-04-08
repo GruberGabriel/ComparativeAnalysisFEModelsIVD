@@ -44,7 +44,7 @@ function CompareValidationIDPResults()
 
     %% Plot ROM-moment curves for different loading directions
     lineStyles = {'-.', '--', ':'}; % Define linestyles
-    lineColors = {'black', '#EE0000' ,'#00CD00', '#0000FF'}; % Define line colors: dark-red, dark-green, blue
+    lineColors = {'black', '#EE0000' ,'#00CD00', '#0000FF'}; % Define line colors: black, dark-red, dark-green, blue
     FontSizeTitle = 14;
     FontSizeAxLabel = 12;
     FontSizeLegend = 10;
