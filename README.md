@@ -20,6 +20,13 @@ The code features a model that employs the anisotropic Holzapfel-Gasser-Ogden (H
 **Different calibration steps:**
 ![CalibrationProcess](https://github.com/GruberGabriel/ComparativeAnalysisFEModelsIVD/assets/159779728/dc5911ca-5848-4f87-b240-971eac443e71)
 
+## Usage Instructions
+To utilize this repository for simulation purposes, follow these steps:
+
+- **Main Script**: The primary file to execute is "ComparativeAnalysisFEModels.m". Running this script initiates the simulation pipeline.
+- **Settings Adjustment**: Within this main file, you can adjust settings such as the geometric dimensions of the disc to tailor the simulations to specific needs.
+- **Preparation**: Ensure to review and configure the "RunProcessSimulations.m" file before starting the simulations. This file controls the launch of the Abaqus simulations and includes settings for the number of CPUs and GPU acceleration. Adjust these settings based on the capabilities of your machine to optimize performance.
+
 ## Software Versions
 
 This code has been developed and tested using the following software versions:
