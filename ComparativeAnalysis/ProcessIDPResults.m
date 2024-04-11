@@ -60,7 +60,7 @@ function RsquaredValues = ProcessIDPResults(MatConfiguration, Modeltype)
     NumResults = ProcessNumResults(NumResults_temp,Moment);
     RsquaredValues = CalculateRSquared(NumResults,ExpResultsMedian);    
     
-    %% Plot ROM-moment curves for different loading directions
+    %% Plot IDP-moment curves for different loading directions
     fig = figure('position', [0, 0, 800, 500]);
     
     % Flexion
