@@ -33,6 +33,9 @@ This code has been developed and tested using the following software versions:
 
 - Abaqus® (version 2023)
 - MATLAB® (version R2023a)
+  - Required toolboxes:
+    - Deep Learning Toolbox
+    - Curve Fitting Toolbox
 - Python 3.9 (Compatibility with any Python 3.x version.)
 
 ## Citation

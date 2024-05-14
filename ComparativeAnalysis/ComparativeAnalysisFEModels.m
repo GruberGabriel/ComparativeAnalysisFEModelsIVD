@@ -67,7 +67,7 @@ CalParameters = 9:11;
 CalParameters = intersect(CalParameters, CalibrationParametersRebar);
 [BestRsquared_NonLinReb2, NonLinRebConfiguration_2] = CalibrationMaterialParameters(3, NonLinRebConfiguration_1, MaxNGenerations_2, 20, RsquaredThreshold_2, CalParameters, Step);
 
-%% final calibration results
+%% Final calibration results
 % Run & evaluate simulations with final cal-configurations
 RsquaredValuesCalibration = zeros(3,5);
 TimeValuesCalibration = zeros(3,4);
@@ -75,7 +75,7 @@ TimeValuesCalibration = zeros(3,4);
 [RsquaredValuesCalibration(2,:), TimeValuesCalibration(2,:)] = ProcessCalibrationConfiguration(LinRebConfiguration_2, 2);
 [RsquaredValuesCalibration(3,:), TimeValuesCalibration(3,:)] = ProcessCalibrationConfiguration(NonLinRebConfiguration_2, 3);
 
-%Create .xlsx-file for results final calibrated-configurations
+% Create .xlsx-file for results final calibrated-configurations
 ResultsLabels = {'Rsquared','RsquaredFlex', 'RsquaredExt', 'RsquaredLB', 'RsquaredAR','TimeFlex','TimeExt','TimeLB','TimeAR'};
 Results = [RsquaredValuesCalibration, TimeValuesCalibration];
 Results = array2table(Results,'VariableNames',ResultsLabels);
