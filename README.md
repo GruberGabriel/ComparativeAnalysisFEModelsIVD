@@ -3,6 +3,7 @@
 This is the official code and data repository for the paper "Comparative FEM Study on Intervertebral Disc Modeling: Holzapfel-Gasser-Ogden vs. Structural Rebars". 
 
 ![DOI](https://zenodo.org/badge/DOI/10.3389/fbioe.2024.1391957.svg)
+![DOI]([https://zenodo.org/badge/DOI/10.3389/fbioe.2024.1391957.svg](https://doi.org/10.3389/fbioe.2024.1391957))
 
 ## Content
 
